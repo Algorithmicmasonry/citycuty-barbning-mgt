@@ -1,9 +1,7 @@
-import React from 'react'
+import { SalesHistory } from "@/components/admin";
 
 const SalesPage = () => {
-  return (
-    <div>SalesPage</div>
-  )
-}
+  return <SalesHistory />;
+};
 
-export default SalesPage
+export default SalesPage;
