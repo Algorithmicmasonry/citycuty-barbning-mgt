@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,8 @@ import {
   Users,
   FileText,
   BanknoteArrowDown,
+  Menu,
+  X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +24,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   const navItems = [
     { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -32,63 +35,91 @@ export default function AdminLayout({
   ];
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <div className="min-h-screen flex">
+      {/* Mobile overlay */}
+      {open && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-full md:w-64 border-b md:border-r border-border bg-card md:min-h-screen">
-        <div className="sticky top-0">
-          {/* Logo */}
-          <div className="p-4 md:p-6 border-b border-border">
-            <div className="flex items-center gap-3">
+      <aside
+        className={cn(
+          "fixed md:static z-50 inset-y-0 left-0 w-64 bg-card border-r border-border",
+          "transform transition-transform duration-200",
+          open ? "translate-x-0" : "-translate-x-full",
+          "md:translate-x-0"
+        )}
+      >
+        {/* Header */}
+        <div className="p-4 border-b border-border flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Link href="/">
               <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
                 <Scissors className="w-6 h-6 text-primary-foreground" />
               </div>
-              <div>
-                <h1 className="text-lg font-bold text-foreground">
-                  CityCut Admin
-                </h1>
-                <p className="text-xs text-muted-foreground">
-                  Management Portal
-                </p>
-              </div>
+            </Link>
+
+            <div>
+              <h1 className="text-lg font-bold">CityCut Admin</h1>
+              <p className="text-xs text-muted-foreground">Management Portal</p>
             </div>
           </div>
 
-          {/* Navigation */}
-          <nav className="p-2 md:p-4 space-y-1">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = pathname === item.href;
-              return (
-                <Link key={item.href} href={item.href}>
-                  <Button
-                    variant={isActive ? "secondary" : "ghost"}
-                    className={cn(
-                      "w-full justify-start cursor-pointer",
-                      isActive && "bg-secondary"
-                    )}
-                  >
-                    <Icon className="w-4 h-4 mr-3" />
-                    {item.label}
-                  </Button>
-                </Link>
-              );
-            })}
-          </nav>
+          {/* Close button (mobile) */}
+          <button className="md:hidden" onClick={() => setOpen(false)}>
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
-          {/* Sign Out */}
-          <div className="p-2 md:p-4 border-t border-border">
-            <Button asChild variant="ghost" className="w-full justify-start">
-              <Link href="/login">
-                <LogOut className="w-4 h-4 mr-3" />
-                Sign Out
+        {/* Navigation */}
+        <nav className="p-4 space-y-1">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+              >
+                <Button
+                  variant={isActive ? "secondary" : "ghost"}
+                  className="w-full justify-start"
+                >
+                  <Icon className="w-4 h-4 mr-3" />
+                  {item.label}
+                </Button>
               </Link>
-            </Button>
-          </div>
+            );
+          })}
+        </nav>
+
+        {/* Sign out */}
+        <div className="p-4 border-t border-border">
+          <Button asChild variant="ghost" className="w-full justify-start">
+            <Link href="/login">
+              <LogOut className="w-4 h-4 mr-3" />
+              Sign Out
+            </Link>
+          </Button>
         </div>
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 overflow-auto">{children}</main>
+      {/* Main area */}
+      <div className="flex-1 flex flex-col">
+        {/* Mobile top bar */}
+        <header className="md:hidden p-4 border-b border-border flex items-center">
+          <button onClick={() => setOpen(true)}>
+            <Menu className="w-6 h-6" />
+          </button>
+        </header>
+
+        <main className="flex-1 overflow-auto">{children}</main>
+      </div>
     </div>
   );
 }

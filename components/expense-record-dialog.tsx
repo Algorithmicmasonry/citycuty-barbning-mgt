@@ -49,6 +49,8 @@ export function ExpenseRecordDialog({ open, onOpenChange }: ExpenseRecordDialogP
                 <SelectItem value="supplies">Supplies</SelectItem>
                 <SelectItem value="utilities">Utilities</SelectItem>
                 <SelectItem value="maintenance">Maintenance</SelectItem>
+                <SelectItem value="fuel">Fuel</SelectItem>
+                <SelectItem value="electricity">Electricity</SelectItem>
                 <SelectItem value="other">Other</SelectItem>
               </SelectContent>
             </Select>
