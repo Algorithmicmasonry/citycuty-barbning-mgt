@@ -1,22 +1,35 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Scissors, LogOut, LayoutDashboard, DollarSign, Users, FileText } from "lucide-react"
-import { cn } from "@/lib/utils"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+  Scissors,
+  LogOut,
+  LayoutDashboard,
+  DollarSign,
+  Users,
+  FileText,
+  BanknoteArrowDown,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
 
   const navItems = [
     { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/admin/sales", label: "Sales", icon: DollarSign },
     { href: "/admin/customers", label: "Customers", icon: Users },
     { href: "/admin/reports", label: "Reports", icon: FileText },
-  ]
+    { href: "/admin/expenses", label: "Expenses", icon: BanknoteArrowDown },
+  ];
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
@@ -30,8 +43,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <Scissors className="w-6 h-6 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-lg font-bold text-foreground">CityCut Admin</h1>
-                <p className="text-xs text-muted-foreground">Management Portal</p>
+                <h1 className="text-lg font-bold text-foreground">
+                  CityCut Admin
+                </h1>
+                <p className="text-xs text-muted-foreground">
+                  Management Portal
+                </p>
               </div>
             </div>
           </div>
@@ -39,19 +56,22 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* Navigation */}
           <nav className="p-2 md:p-4 space-y-1">
             {navItems.map((item) => {
-              const Icon = item.icon
-              const isActive = pathname === item.href
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
               return (
                 <Link key={item.href} href={item.href}>
                   <Button
                     variant={isActive ? "secondary" : "ghost"}
-                    className={cn("w-full justify-start", isActive && "bg-secondary")}
+                    className={cn(
+                      "w-full justify-start cursor-pointer",
+                      isActive && "bg-secondary"
+                    )}
                   >
                     <Icon className="w-4 h-4 mr-3" />
                     {item.label}
                   </Button>
                 </Link>
-              )
+              );
             })}
           </nav>
 
@@ -70,5 +90,5 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main Content */}
       <main className="flex-1 overflow-auto">{children}</main>
     </div>
-  )
+  );
 }

@@ -58,7 +58,7 @@ const mockSales = [
   })),
 ]
 
-export function SalesHistory() {
+export function ExpensesHistory() {
   const [filterType, setFilterType] = useState<"day" | "month">("day")
   const [dateFilter, setDateFilter] = useState("")
   const [monthFilter, setMonthFilter] = useState("")
@@ -68,15 +68,15 @@ export function SalesHistory() {
     <div className="p-4 md:p-6 lg:p-8 space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground">Sales History</h2>
-        <p className="text-muted-foreground">Complete record of all services and transactions</p>
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground">Expenses History</h2>
+        <p className="text-muted-foreground">Complete record of all expenses recorded in the system</p>
       </div>
 
       {/* Filters */}
       <Card className="border-border bg-card">
         <CardHeader>
           <CardTitle>Filters</CardTitle>
-          <CardDescription>Filter sales by date or month</CardDescription>
+          <CardDescription>Filter expenses by date or month</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col md:flex-row gap-4">
@@ -130,8 +130,8 @@ export function SalesHistory() {
       {/* Sales List */}
       <Card className="border-border bg-card">
         <CardHeader>
-          <CardTitle>All Sales</CardTitle>
-          <CardDescription>Showing {mockSales.length} transactions</CardDescription>
+          <CardTitle>All Expenses</CardTitle>
+          <CardDescription>Showing {mockSales.length} expenses recorded</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
