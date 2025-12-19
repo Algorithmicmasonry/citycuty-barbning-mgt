@@ -50,6 +50,7 @@ export function SalesDashboard({
   const [selectedService, setSelectedService] = useState<any | null>(null);
   const [selectedExpense, setSelectedExpense] = useState<any | null>(null);
 
+
   return (
     <div className="min-h-screen flex flex-col ">
       {/* Header */}
@@ -101,7 +102,7 @@ export function SalesDashboard({
           <Card className="border-border bg-card">
             <CardHeader className="pb-3">
               <CardTitle className="text-sm font-medium text-muted-foreground">
-                Services Completed
+                Services Completed Today
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -178,7 +179,7 @@ export function SalesDashboard({
                       className="flex flex-col gap-3 py-3 px-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors"
                     >
                       <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                           <Scissors className="w-5 h-5 text-primary" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -193,7 +194,7 @@ export function SalesDashboard({
                               ₦{s.amountPaid}
                             </p>
                             <p className="text-xs text-muted-foreground">
-                              {s.date}
+                              {new Date(s.serviceDate).toLocaleDateString()}
                             </p>
                           </div>
                         </div>
@@ -238,11 +239,11 @@ export function SalesDashboard({
                       className="flex flex-col gap-3 py-3 px-4 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors"
                     >
                       <div className="flex items-start gap-3">
-                        <div className="w-10 h-10 rounded-full bg-destructive/10 flex items-center justify-center flex-shrink-0">
+                        <div className="w-10 h-10 rounded-full bg-destructive/10 flex items-center justify-center shrink-0">
                           <Receipt className="w-5 h-5 text-destructive" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium text-foreground">
+                          <p className="font-medium text-foreground capitalize">
                             {e.category}
                           </p>
                           <p className="text-sm text-muted-foreground truncate">
@@ -253,7 +254,7 @@ export function SalesDashboard({
                               ₦{e.amount}
                             </p>
                             <p className="text-xs text-muted-foreground">
-                              {e.date}
+                              {new Date(e.expenseDate).toLocaleDateString()}
                             </p>
                           </div>
                         </div>
@@ -388,14 +389,20 @@ export function SalesDashboard({
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-muted-foreground">Category</p>
-                  <p className="font-medium text-foreground">
+                  <p className="font-medium text-foreground capitalize">
                     {selectedExpense.category}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Date</p>
                   <p className="font-medium text-foreground">
-                    {selectedExpense.date}
+                    {new Date(selectedExpense.expenseDate).toLocaleDateString()}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Time</p>
+                  <p className="font-medium text-foreground">
+                    {new Date(selectedExpense.expenseDate).toLocaleTimeString()}
                   </p>
                 </div>
               </div>

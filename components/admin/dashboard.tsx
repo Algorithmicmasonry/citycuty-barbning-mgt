@@ -7,27 +7,30 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
-export function DashboardOverview() {
-  const [selectedMonth, setSelectedMonth] = useState("december")
-
-  // Mock data for chart
-  const chartData = [
-    { month: "Jul", revenue: 8500, expenses: 3200, profit: 5300 },
-    { month: "Aug", revenue: 9200, expenses: 3400, profit: 5800 },
-    { month: "Sep", revenue: 10100, expenses: 3600, profit: 6500 },
-    { month: "Oct", revenue: 11300, expenses: 3800, profit: 7500 },
-    { month: "Nov", revenue: 11800, expenses: 4000, profit: 7800 },
-    { month: "Dec", revenue: 12450, expenses: 4200, profit: 8250 },
-  ]
-
-  const stats = {
-    totalRevenue: 12450.0,
-    totalExpenses: 4200.0,
-    netProfit: 8250.0,
-    totalServices: 234,
-    totalCustomers: 156,
-    monthlyGrowth: 12.5,
+interface DashboardData {
+  stats: {
+    totalRevenue: number
+    totalExpenses: number
+    netProfit: number
+    totalServices: number
+    totalCustomers: number
+    monthlyGrowth: number
   }
+  chartData: Array<{
+    month: string
+    revenue: number
+    expenses: number
+    profit: number
+  }>
+}
+
+interface Props {
+  initialData: DashboardData
+}
+
+export function DashboardOverview({ initialData }: Props) {
+  const [selectedMonth, setSelectedMonth] = useState("current")
+  const { stats, chartData } = initialData
 
   return (
     <div className="p-4 md:p-6 lg:p-8 space-y-6">
@@ -47,7 +50,7 @@ export function DashboardOverview() {
             <div className="flex items-center gap-2">
               <DollarSign className="w-5 h-5 text-primary" />
               <span className="text-2xl md:text-3xl font-bold text-foreground">
-                ₦{stats.totalRevenue.toLocaleString()}
+                ₦{stats.totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             </div>
             <p className="text-xs text-muted-foreground mt-2">This month</p>
@@ -62,7 +65,7 @@ export function DashboardOverview() {
             <div className="flex items-center gap-2">
               <Receipt className="w-5 h-5 text-destructive" />
               <span className="text-2xl md:text-3xl font-bold text-foreground">
-                ₦{stats.totalExpenses.toLocaleString()}
+                ₦{stats.totalExpenses.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             </div>
             <p className="text-xs text-muted-foreground mt-2">This month</p>
@@ -77,7 +80,7 @@ export function DashboardOverview() {
             <div className="flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-accent" />
               <span className="text-2xl md:text-3xl font-bold text-foreground">
-                ₦{stats.netProfit.toLocaleString()}
+                ₦{stats.netProfit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             </div>
             <p className="text-xs text-muted-foreground mt-2">Revenue - Expenses</p>
@@ -86,7 +89,7 @@ export function DashboardOverview() {
 
         <Card className="border-border bg-card">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Services</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Total Services Rendered</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
@@ -117,7 +120,9 @@ export function DashboardOverview() {
           <CardContent>
             <div className="flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-accent" />
-              <span className="text-2xl md:text-3xl font-bold text-foreground">+{stats.monthlyGrowth}%</span>
+              <span className={`text-2xl md:text-3xl font-bold ${stats.monthlyGrowth >= 0 ? 'text-accent' : 'text-destructive'}`}>
+                {stats.monthlyGrowth >= 0 ? '+' : ''}{stats.monthlyGrowth.toFixed(1)}%
+              </span>
             </div>
             <p className="text-xs text-muted-foreground mt-2">vs last month</p>
           </CardContent>
@@ -130,21 +135,8 @@ export function DashboardOverview() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <CardTitle>Financial Overview</CardTitle>
-              <CardDescription>Revenue, expenses, and profit trends over time</CardDescription>
+              <CardDescription>Revenue, expenses, and profit trends over the last 6 months</CardDescription>
             </div>
-            <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-              <SelectTrigger className="w-full md:w-[180px]">
-                <SelectValue placeholder="Select month" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="july">July 2025</SelectItem>
-                <SelectItem value="august">August 2025</SelectItem>
-                <SelectItem value="september">September 2025</SelectItem>
-                <SelectItem value="october">October 2025</SelectItem>
-                <SelectItem value="november">November 2025</SelectItem>
-                <SelectItem value="december">December 2025</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
         </CardHeader>
         <CardContent>

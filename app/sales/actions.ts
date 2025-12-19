@@ -73,3 +73,40 @@ export async function createServiceRecord(input: ServiceInput) {
     };
   }
 }
+
+
+
+interface ExpenseInput {
+  category: string;
+  amount: number;
+  description?: string;
+}
+
+export async function createExpense(input: ExpenseInput) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return { success: false, error: "Not authenticated" };
+    }
+
+    await prisma.expense.create({
+      data: {
+        category: input.category,
+        amount: input.amount,
+        description: input.description,
+        recordedById: session.user.id,
+      },
+    });
+
+    revalidatePath("/sales");
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error creating expense:", error);
+    return {
+      success: false,
+      error: "Failed to record expense",
+    };
+  }
+}

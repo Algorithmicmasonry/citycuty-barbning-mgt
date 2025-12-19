@@ -23,6 +23,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { Loader2 } from "lucide-react";
 
 interface ServiceRecordDialogProps {
   open: boolean;
@@ -62,10 +63,12 @@ export function ServiceRecordDialog({
   const [serviceType, setServiceType] = useState("");
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const res = await createServiceRecord({
       customerName,
@@ -81,7 +84,7 @@ export function ServiceRecordDialog({
     } else {
       toast.success("Service record successfully!");
     }
-
+    setIsLoading(false);
     router.refresh();
 
     // Revalidate sales page to show new data
@@ -195,11 +198,20 @@ export function ServiceRecordDialog({
               variant="outline"
               onClick={() => onOpenChange(false)}
               className="flex-1"
+              disabled={isLoading}
             >
               Cancel
             </Button>
-            <Button type="submit" className="flex-1 cursor-pointer">
-              Record Service
+            <Button
+              type="submit"
+              className="flex-1 cursor-pointer"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                "Record Service"
+              )}
             </Button>
           </div>
         </form>

@@ -59,6 +59,8 @@ export default async function SalesPage() {
     },
   });
 
+  console.log(todaySales._sum.amountPaid?.toNumber(), todayServices, todayExpenses._sum.amount?.toNumber())
+
   return (
     <SalesDashboard
       services={serializePrisma(services)}          // ✅ convert Decimals

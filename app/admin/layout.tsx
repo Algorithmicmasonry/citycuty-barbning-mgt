@@ -88,7 +88,7 @@ export default function AdminLayout({
               >
                 <Button
                   variant={isActive ? "secondary" : "ghost"}
-                  className="w-full justify-start"
+                  className="w-full justify-start cursor-pointer"
                 >
                   <Icon className="w-4 h-4 mr-3" />
                   {item.label}

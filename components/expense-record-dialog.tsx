@@ -1,42 +1,78 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import toast from "react-hot-toast";
+import { createExpense } from "@/app/sales/actions";
+import { Loader2 } from "lucide-react";
 
 interface ExpenseRecordDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-export function ExpenseRecordDialog({ open, onOpenChange }: ExpenseRecordDialogProps) {
-  const [category, setCategory] = useState("")
-  const [amount, setAmount] = useState("")
-  const [description, setDescription] = useState("")
+export function ExpenseRecordDialog({
+  open,
+  onOpenChange,
+}: ExpenseRecordDialogProps) {
+  const [category, setCategory] = useState("");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission
-    console.log({ category, amount, description })
-    onOpenChange(false)
-    // Reset form
-    setCategory("")
-    setAmount("")
-    setDescription("")
-  }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true)
+
+    const result = await createExpense({
+      category,
+      amount: Number(amount),
+      description,
+    });
+
+    if (result.success) {
+      toast.success("Expense recorded successfully");
+      onOpenChange(false);
+
+      // Reset form
+      setIsLoading(false)
+      setCategory("");
+      setAmount("");
+      setDescription("");
+    
+    } else {
+      setIsLoading(false)
+      toast.error(result.error ?? "Something went wrong");
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md bg-card">
         <DialogHeader>
           <DialogTitle>Record Expense</DialogTitle>
-          <DialogDescription>Enter the details for the daily expense</DialogDescription>
+          <DialogDescription>
+            Enter the details for the daily expense
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -80,15 +116,21 @@ export function ExpenseRecordDialog({ open, onOpenChange }: ExpenseRecordDialogP
             />
           </div>
           <div className="flex gap-3 pt-4">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="flex-1">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              className="flex-1"
+              disabled={isLoading}
+            >
               Cancel
             </Button>
-            <Button type="submit" className="flex-1">
-              Record Expense
+            <Button type="submit" className="flex-1 cursor-pointer" disabled={isLoading}>
+             {isLoading ? <Loader2 className="animate-spin"/> :  "Record Expense"}
             </Button>
           </div>
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
