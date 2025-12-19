@@ -60,7 +60,7 @@ model ServiceRecord {
   id String @id @default(uuid())
 
   serviceType   String
-  amountPaid    Decimal       @db.Decimal(10, 2)
+  amountPaid    Int
   paymentMethod PaymentMethod
 
   barberName String
@@ -85,7 +85,7 @@ model Expense {
   id String @id @default(uuid())
 
   category    String
-  amount      Decimal @db.Decimal(10, 2)
+  amount      Int
   description String?
 
   expenseDate DateTime @default(now())

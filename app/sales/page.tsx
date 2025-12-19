@@ -2,12 +2,10 @@
 import { SalesDashboard } from "@/components/sales-dashboard";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../api/auth/[...nextauth]/route"; 
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { serializePrisma } from "@/lib/utils";
 
 // Helper to serialize Prisma objects (convert Decimals to numbers)
-function serializePrisma(obj: any) {
-  return JSON.parse(JSON.stringify(obj));
-}
 
 export default async function SalesPage() {
   const session = await getServerSession(authOptions);
@@ -59,15 +57,19 @@ export default async function SalesPage() {
     },
   });
 
-  console.log(todaySales._sum.amountPaid?.toNumber(), todayServices, todayExpenses._sum.amount?.toNumber())
+  console.log(
+    todaySales._sum.amountPaid,
+    todayServices,
+    todayExpenses._sum.amount
+  );
 
   return (
     <SalesDashboard
-      services={serializePrisma(services)}          // ✅ convert Decimals
-      expenses={serializePrisma(expenses)}          // ✅ convert Decimals
-      todaySales={todaySales._sum.amountPaid?.toNumber() || 0}  // ✅ convert Decimal
+      services={serializePrisma(services)} // ✅ convert Decimals
+      expenses={serializePrisma(expenses)} // ✅ convert Decimals
+      todaySales={todaySales._sum.amountPaid || 0} // ✅ convert Decimal
       todayServices={todayServices}
-      todayExpenses={todayExpenses._sum.amount?.toNumber() || 0} // ✅ convert Decimal
+      todayExpenses={todayExpenses._sum.amount || 0} // ✅ convert Decimal
     />
   );
 }

@@ -1,13 +1,20 @@
-import { DashboardOverview } from '@/components/admin'
-import  prisma  from '@/lib/prisma'
-import { startOfMonth, endOfMonth, subMonths, format } from 'date-fns'
+// app/dashboard/page.tsx (Server Component)
+import { DashboardOverview } from "@/components/admin";
+import prisma from "@/lib/prisma";
+import {
+  startOfMonth,
+  endOfMonth,
+  subMonths,
+  format,
+  eachDayOfInterval,
+} from "date-fns";
 
 async function getDashboardData() {
-  const now = new Date()
-  const startOfCurrentMonth = startOfMonth(now)
-  const endOfCurrentMonth = endOfMonth(now)
-  const startOfLastMonth = startOfMonth(subMonths(now, 1))
-  const endOfLastMonth = endOfMonth(subMonths(now, 1))
+  const now = new Date();
+  const startOfCurrentMonth = startOfMonth(now);
+  const endOfCurrentMonth = endOfMonth(now);
+  const startOfLastMonth = startOfMonth(subMonths(now, 1));
+  const endOfLastMonth = endOfMonth(subMonths(now, 1));
 
   // Get current month stats
   const [
@@ -16,6 +23,8 @@ async function getDashboardData() {
     lastMonthServices,
     lastMonthExpenses,
     totalCustomers,
+    allServices,
+    allExpenses,
   ] = await Promise.all([
     // Current month services
     prisma.serviceRecord.findMany({
@@ -67,101 +76,110 @@ async function getDashboardData() {
     }),
     // Total unique customers
     prisma.customer.count(),
-  ])
+    // All services for chart
+    prisma.serviceRecord.findMany({
+      select: {
+        serviceDate: true,
+        amountPaid: true,
+      },
+      orderBy: {
+        serviceDate: "asc",
+      },
+    }),
+    // All expenses for chart
+    prisma.expense.findMany({
+      select: {
+        expenseDate: true,
+        amount: true,
+      },
+      orderBy: {
+        expenseDate: "asc",
+      },
+    }),
+  ]);
 
   // Calculate totals
   const currentRevenue = currentMonthServices.reduce(
     (sum, service) => sum + Number(service.amountPaid),
     0
-  )
+  );
   const currentExpensesTotal = currentMonthExpenses.reduce(
     (sum, expense) => sum + Number(expense.amount),
     0
-  )
+  );
   const lastMonthRevenue = lastMonthServices.reduce(
     (sum, service) => sum + Number(service.amountPaid),
     0
-  )
-  const lastMonthExpensesTotal = lastMonthExpenses.reduce(
-    (sum, expense) => sum + Number(expense.amount),
-    0
-  )
+  );
 
-  const netProfit = currentRevenue - currentExpensesTotal
-  const lastMonthProfit = lastMonthRevenue - lastMonthExpensesTotal
+  const netProfit = currentRevenue - currentExpensesTotal;
 
   // Calculate growth rate
   const growthRate =
     lastMonthRevenue > 0
       ? ((currentRevenue - lastMonthRevenue) / lastMonthRevenue) * 100
-      : 0
+      : 0;
 
-  // Get chart data for last 6 months
-  const chartData = []
-  for (let i = 5; i >= 0; i--) {
-    const monthDate = subMonths(now, i)
-    const monthStart = startOfMonth(monthDate)
-    const monthEnd = endOfMonth(monthDate)
+  // Get available months from services and expenses
+  const availableMonths = new Set<string>();
+  allServices.forEach((s) => {
+    availableMonths.add(format(new Date(s.serviceDate), "yyyy-MM"));
+  });
+  allExpenses.forEach((e) => {
+    availableMonths.add(format(new Date(e.expenseDate), "yyyy-MM"));
+  });
 
-    const [monthServices, monthExpenses] = await Promise.all([
-      prisma.serviceRecord.findMany({
-        where: {
-          serviceDate: {
-            gte: monthStart,
-            lte: monthEnd,
-          },
-        },
-        select: {
-          amountPaid: true,
-        },
-      }),
-      prisma.expense.findMany({
-        where: {
-          expenseDate: {
-            gte: monthStart,
-            lte: monthEnd,
-          },
-        },
-        select: {
-          amount: true,
-        },
-      }),
-    ])
+  // Generate chart data for current month (daily breakdown)
+  const daysInMonth = eachDayOfInterval({
+    start: startOfCurrentMonth,
+    end: endOfCurrentMonth,
+  });
 
-    const revenue = monthServices.reduce(
-      (sum, service) => sum + Number(service.amountPaid),
+  const chartData = daysInMonth.map((day) => {
+    const dayStr = format(day, "yyyy-MM-dd");
+
+    const dayServices = allServices.filter(
+      (s) => format(new Date(s.serviceDate), "yyyy-MM-dd") === dayStr
+    );
+    const dayExpenses = allExpenses.filter(
+      (e) => format(new Date(e.expenseDate), "yyyy-MM-dd") === dayStr
+    );
+
+    const revenue = dayServices.reduce(
+      (sum, s) => sum + Number(s.amountPaid),
       0
-    )
-    const expenses = monthExpenses.reduce(
-      (sum, expense) => sum + Number(expense.amount),
-      0
-    )
+    );
+    const expenses = dayExpenses.reduce((sum, e) => sum + Number(e.amount), 0);
 
-    chartData.push({
-      month: format(monthDate, 'MMM'),
+    return {
+      date: dayStr,
       revenue: Math.round(revenue),
       expenses: Math.round(expenses),
       profit: Math.round(revenue - expenses),
-    })
-  }
+    };
+  });
 
   return {
     stats: {
-      totalRevenue: currentRevenue,
-      totalExpenses: currentExpensesTotal,
-      netProfit: netProfit,
-      totalServices: currentMonthServices.length,
+      totalRevenue: Number(currentRevenue),
+      totalExpenses: Number(currentExpensesTotal),
+      netProfit: Number(netProfit),
+      totalServices: Number(currentMonthServices.length),
       totalCustomers: totalCustomers,
-      monthlyGrowth: growthRate,
+      monthlyGrowth: Number(growthRate),
     },
     chartData,
-  }
+    availableMonths: Array.from(availableMonths).sort().reverse(),
+    currentMonth: format(now, "yyyy-MM"),
+    allServices,
+    allExpenses,
+  };
 }
 
 const DashboardPage = async () => {
-  const data = await getDashboardData()
-  
-  return <DashboardOverview initialData={data} />
-}
+  const data = await getDashboardData();
 
-export default DashboardPage
+  return <DashboardOverview initialData={data} />;
+};
+
+export default DashboardPage;

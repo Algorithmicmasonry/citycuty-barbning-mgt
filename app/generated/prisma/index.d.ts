@@ -3928,17 +3928,17 @@ export namespace Prisma {
   }
 
   export type ServiceRecordAvgAggregateOutputType = {
-    amountPaid: Decimal | null
+    amountPaid: number | null
   }
 
   export type ServiceRecordSumAggregateOutputType = {
-    amountPaid: Decimal | null
+    amountPaid: number | null
   }
 
   export type ServiceRecordMinAggregateOutputType = {
     id: string | null
     serviceType: string | null
-    amountPaid: Decimal | null
+    amountPaid: number | null
     paymentMethod: $Enums.PaymentMethod | null
     barberName: string | null
     serviceDate: Date | null
@@ -3952,7 +3952,7 @@ export namespace Prisma {
   export type ServiceRecordMaxAggregateOutputType = {
     id: string | null
     serviceType: string | null
-    amountPaid: Decimal | null
+    amountPaid: number | null
     paymentMethod: $Enums.PaymentMethod | null
     barberName: string | null
     serviceDate: Date | null
@@ -4119,7 +4119,7 @@ export namespace Prisma {
   export type ServiceRecordGroupByOutputType = {
     id: string
     serviceType: string
-    amountPaid: Decimal
+    amountPaid: number
     paymentMethod: $Enums.PaymentMethod
     barberName: string
     serviceDate: Date
@@ -4234,7 +4234,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       serviceType: string
-      amountPaid: Prisma.Decimal
+      amountPaid: number
       paymentMethod: $Enums.PaymentMethod
       barberName: string
       serviceDate: Date
@@ -4670,7 +4670,7 @@ export namespace Prisma {
   interface ServiceRecordFieldRefs {
     readonly id: FieldRef<"ServiceRecord", 'String'>
     readonly serviceType: FieldRef<"ServiceRecord", 'String'>
-    readonly amountPaid: FieldRef<"ServiceRecord", 'Decimal'>
+    readonly amountPaid: FieldRef<"ServiceRecord", 'Int'>
     readonly paymentMethod: FieldRef<"ServiceRecord", 'PaymentMethod'>
     readonly barberName: FieldRef<"ServiceRecord", 'String'>
     readonly serviceDate: FieldRef<"ServiceRecord", 'DateTime'>
@@ -5106,17 +5106,17 @@ export namespace Prisma {
   }
 
   export type ExpenseAvgAggregateOutputType = {
-    amount: Decimal | null
+    amount: number | null
   }
 
   export type ExpenseSumAggregateOutputType = {
-    amount: Decimal | null
+    amount: number | null
   }
 
   export type ExpenseMinAggregateOutputType = {
     id: string | null
     category: string | null
-    amount: Decimal | null
+    amount: number | null
     description: string | null
     expenseDate: Date | null
     recordedById: string | null
@@ -5128,7 +5128,7 @@ export namespace Prisma {
   export type ExpenseMaxAggregateOutputType = {
     id: string | null
     category: string | null
-    amount: Decimal | null
+    amount: number | null
     description: string | null
     expenseDate: Date | null
     recordedById: string | null
@@ -5285,7 +5285,7 @@ export namespace Prisma {
   export type ExpenseGroupByOutputType = {
     id: string
     category: string
-    amount: Decimal
+    amount: number
     description: string | null
     expenseDate: Date
     recordedById: string
@@ -5383,7 +5383,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       category: string
-      amount: Prisma.Decimal
+      amount: number
       description: string | null
       expenseDate: Date
       recordedById: string
@@ -5816,7 +5816,7 @@ export namespace Prisma {
   interface ExpenseFieldRefs {
     readonly id: FieldRef<"Expense", 'String'>
     readonly category: FieldRef<"Expense", 'String'>
-    readonly amount: FieldRef<"Expense", 'Decimal'>
+    readonly amount: FieldRef<"Expense", 'Int'>
     readonly description: FieldRef<"Expense", 'String'>
     readonly expenseDate: FieldRef<"Expense", 'DateTime'>
     readonly recordedById: FieldRef<"Expense", 'String'>
@@ -10627,20 +10627,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Decimal'
-   */
-  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-  /**
-   * Reference to a field of type 'Decimal[]'
-   */
-  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
-    
-
-
-  /**
    * Reference to a field of type 'PaymentMethod'
    */
   export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod'>
@@ -10813,7 +10799,7 @@ export namespace Prisma {
     NOT?: ServiceRecordWhereInput | ServiceRecordWhereInput[]
     id?: StringFilter<"ServiceRecord"> | string
     serviceType?: StringFilter<"ServiceRecord"> | string
-    amountPaid?: DecimalFilter<"ServiceRecord"> | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntFilter<"ServiceRecord"> | number
     paymentMethod?: EnumPaymentMethodFilter<"ServiceRecord"> | $Enums.PaymentMethod
     barberName?: StringFilter<"ServiceRecord"> | string
     serviceDate?: DateTimeFilter<"ServiceRecord"> | Date | string
@@ -10849,7 +10835,7 @@ export namespace Prisma {
     OR?: ServiceRecordWhereInput[]
     NOT?: ServiceRecordWhereInput | ServiceRecordWhereInput[]
     serviceType?: StringFilter<"ServiceRecord"> | string
-    amountPaid?: DecimalFilter<"ServiceRecord"> | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntFilter<"ServiceRecord"> | number
     paymentMethod?: EnumPaymentMethodFilter<"ServiceRecord"> | $Enums.PaymentMethod
     barberName?: StringFilter<"ServiceRecord"> | string
     serviceDate?: DateTimeFilter<"ServiceRecord"> | Date | string
@@ -10886,7 +10872,7 @@ export namespace Prisma {
     NOT?: ServiceRecordScalarWhereWithAggregatesInput | ServiceRecordScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ServiceRecord"> | string
     serviceType?: StringWithAggregatesFilter<"ServiceRecord"> | string
-    amountPaid?: DecimalWithAggregatesFilter<"ServiceRecord"> | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntWithAggregatesFilter<"ServiceRecord"> | number
     paymentMethod?: EnumPaymentMethodWithAggregatesFilter<"ServiceRecord"> | $Enums.PaymentMethod
     barberName?: StringWithAggregatesFilter<"ServiceRecord"> | string
     serviceDate?: DateTimeWithAggregatesFilter<"ServiceRecord"> | Date | string
@@ -10903,7 +10889,7 @@ export namespace Prisma {
     NOT?: ExpenseWhereInput | ExpenseWhereInput[]
     id?: StringFilter<"Expense"> | string
     category?: StringFilter<"Expense"> | string
-    amount?: DecimalFilter<"Expense"> | Decimal | DecimalJsLike | number | string
+    amount?: IntFilter<"Expense"> | number
     description?: StringNullableFilter<"Expense"> | string | null
     expenseDate?: DateTimeFilter<"Expense"> | Date | string
     recordedById?: StringFilter<"Expense"> | string
@@ -10933,7 +10919,7 @@ export namespace Prisma {
     OR?: ExpenseWhereInput[]
     NOT?: ExpenseWhereInput | ExpenseWhereInput[]
     category?: StringFilter<"Expense"> | string
-    amount?: DecimalFilter<"Expense"> | Decimal | DecimalJsLike | number | string
+    amount?: IntFilter<"Expense"> | number
     description?: StringNullableFilter<"Expense"> | string | null
     expenseDate?: DateTimeFilter<"Expense"> | Date | string
     recordedById?: StringFilter<"Expense"> | string
@@ -10965,7 +10951,7 @@ export namespace Prisma {
     NOT?: ExpenseScalarWhereWithAggregatesInput | ExpenseScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Expense"> | string
     category?: StringWithAggregatesFilter<"Expense"> | string
-    amount?: DecimalWithAggregatesFilter<"Expense"> | Decimal | DecimalJsLike | number | string
+    amount?: IntWithAggregatesFilter<"Expense"> | number
     description?: StringNullableWithAggregatesFilter<"Expense"> | string | null
     expenseDate?: DateTimeWithAggregatesFilter<"Expense"> | Date | string
     recordedById?: StringWithAggregatesFilter<"Expense"> | string
@@ -11363,7 +11349,7 @@ export namespace Prisma {
   export type ServiceRecordCreateInput = {
     id?: string
     serviceType: string
-    amountPaid: Decimal | DecimalJsLike | number | string
+    amountPaid: number
     paymentMethod: $Enums.PaymentMethod
     barberName: string
     serviceDate?: Date | string
@@ -11377,7 +11363,7 @@ export namespace Prisma {
   export type ServiceRecordUncheckedCreateInput = {
     id?: string
     serviceType: string
-    amountPaid: Decimal | DecimalJsLike | number | string
+    amountPaid: number
     paymentMethod: $Enums.PaymentMethod
     barberName: string
     serviceDate?: Date | string
@@ -11391,7 +11377,7 @@ export namespace Prisma {
   export type ServiceRecordUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceType?: StringFieldUpdateOperationsInput | string
-    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntFieldUpdateOperationsInput | number
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     barberName?: StringFieldUpdateOperationsInput | string
     serviceDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11405,7 +11391,7 @@ export namespace Prisma {
   export type ServiceRecordUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceType?: StringFieldUpdateOperationsInput | string
-    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntFieldUpdateOperationsInput | number
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     barberName?: StringFieldUpdateOperationsInput | string
     serviceDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11419,7 +11405,7 @@ export namespace Prisma {
   export type ServiceRecordCreateManyInput = {
     id?: string
     serviceType: string
-    amountPaid: Decimal | DecimalJsLike | number | string
+    amountPaid: number
     paymentMethod: $Enums.PaymentMethod
     barberName: string
     serviceDate?: Date | string
@@ -11433,7 +11419,7 @@ export namespace Prisma {
   export type ServiceRecordUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceType?: StringFieldUpdateOperationsInput | string
-    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntFieldUpdateOperationsInput | number
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     barberName?: StringFieldUpdateOperationsInput | string
     serviceDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11445,7 +11431,7 @@ export namespace Prisma {
   export type ServiceRecordUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceType?: StringFieldUpdateOperationsInput | string
-    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntFieldUpdateOperationsInput | number
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     barberName?: StringFieldUpdateOperationsInput | string
     serviceDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11459,7 +11445,7 @@ export namespace Prisma {
   export type ExpenseCreateInput = {
     id?: string
     category: string
-    amount: Decimal | DecimalJsLike | number | string
+    amount: number
     description?: string | null
     expenseDate?: Date | string
     isSynced?: boolean
@@ -11471,7 +11457,7 @@ export namespace Prisma {
   export type ExpenseUncheckedCreateInput = {
     id?: string
     category: string
-    amount: Decimal | DecimalJsLike | number | string
+    amount: number
     description?: string | null
     expenseDate?: Date | string
     recordedById: string
@@ -11483,7 +11469,7 @@ export namespace Prisma {
   export type ExpenseUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amount?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expenseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isSynced?: BoolFieldUpdateOperationsInput | boolean
@@ -11495,7 +11481,7 @@ export namespace Prisma {
   export type ExpenseUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amount?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expenseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     recordedById?: StringFieldUpdateOperationsInput | string
@@ -11507,7 +11493,7 @@ export namespace Prisma {
   export type ExpenseCreateManyInput = {
     id?: string
     category: string
-    amount: Decimal | DecimalJsLike | number | string
+    amount: number
     description?: string | null
     expenseDate?: Date | string
     recordedById: string
@@ -11519,7 +11505,7 @@ export namespace Prisma {
   export type ExpenseUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amount?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expenseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isSynced?: BoolFieldUpdateOperationsInput | boolean
@@ -11530,7 +11516,7 @@ export namespace Prisma {
   export type ExpenseUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amount?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expenseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     recordedById?: StringFieldUpdateOperationsInput | string
@@ -12002,17 +11988,6 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type DecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
   export type EnumPaymentMethodFilter<$PrismaModel = never> = {
     equals?: $Enums.PaymentMethod | EnumPaymentMethodFieldRefInput<$PrismaModel>
     in?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
@@ -12098,22 +12073,6 @@ export namespace Prisma {
 
   export type ServiceRecordSumOrderByAggregateInput = {
     amountPaid?: SortOrder
-  }
-
-  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedDecimalFilter<$PrismaModel>
-    _sum?: NestedDecimalFilter<$PrismaModel>
-    _min?: NestedDecimalFilter<$PrismaModel>
-    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
   export type EnumPaymentMethodWithAggregatesFilter<$PrismaModel = never> = {
@@ -12584,14 +12543,6 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type DecimalFieldUpdateOperationsInput = {
-    set?: Decimal | DecimalJsLike | number | string
-    increment?: Decimal | DecimalJsLike | number | string
-    decrement?: Decimal | DecimalJsLike | number | string
-    multiply?: Decimal | DecimalJsLike | number | string
-    divide?: Decimal | DecimalJsLike | number | string
-  }
-
   export type EnumPaymentMethodFieldUpdateOperationsInput = {
     set?: $Enums.PaymentMethod
   }
@@ -12790,17 +12741,6 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedDecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
   export type NestedEnumPaymentMethodFilter<$PrismaModel = never> = {
     equals?: $Enums.PaymentMethod | EnumPaymentMethodFieldRefInput<$PrismaModel>
     in?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
@@ -12820,22 +12760,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedDecimalFilter<$PrismaModel>
-    _sum?: NestedDecimalFilter<$PrismaModel>
-    _min?: NestedDecimalFilter<$PrismaModel>
-    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
   export type NestedEnumPaymentMethodWithAggregatesFilter<$PrismaModel = never> = {
@@ -12966,7 +12890,7 @@ export namespace Prisma {
   export type ServiceRecordCreateWithoutRecordedByInput = {
     id?: string
     serviceType: string
-    amountPaid: Decimal | DecimalJsLike | number | string
+    amountPaid: number
     paymentMethod: $Enums.PaymentMethod
     barberName: string
     serviceDate?: Date | string
@@ -12979,7 +12903,7 @@ export namespace Prisma {
   export type ServiceRecordUncheckedCreateWithoutRecordedByInput = {
     id?: string
     serviceType: string
-    amountPaid: Decimal | DecimalJsLike | number | string
+    amountPaid: number
     paymentMethod: $Enums.PaymentMethod
     barberName: string
     serviceDate?: Date | string
@@ -13002,7 +12926,7 @@ export namespace Prisma {
   export type ExpenseCreateWithoutRecordedByInput = {
     id?: string
     category: string
-    amount: Decimal | DecimalJsLike | number | string
+    amount: number
     description?: string | null
     expenseDate?: Date | string
     isSynced?: boolean
@@ -13013,7 +12937,7 @@ export namespace Prisma {
   export type ExpenseUncheckedCreateWithoutRecordedByInput = {
     id?: string
     category: string
-    amount: Decimal | DecimalJsLike | number | string
+    amount: number
     description?: string | null
     expenseDate?: Date | string
     isSynced?: boolean
@@ -13113,7 +13037,7 @@ export namespace Prisma {
     NOT?: ServiceRecordScalarWhereInput | ServiceRecordScalarWhereInput[]
     id?: StringFilter<"ServiceRecord"> | string
     serviceType?: StringFilter<"ServiceRecord"> | string
-    amountPaid?: DecimalFilter<"ServiceRecord"> | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntFilter<"ServiceRecord"> | number
     paymentMethod?: EnumPaymentMethodFilter<"ServiceRecord"> | $Enums.PaymentMethod
     barberName?: StringFilter<"ServiceRecord"> | string
     serviceDate?: DateTimeFilter<"ServiceRecord"> | Date | string
@@ -13146,7 +13070,7 @@ export namespace Prisma {
     NOT?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
     id?: StringFilter<"Expense"> | string
     category?: StringFilter<"Expense"> | string
-    amount?: DecimalFilter<"Expense"> | Decimal | DecimalJsLike | number | string
+    amount?: IntFilter<"Expense"> | number
     description?: StringNullableFilter<"Expense"> | string | null
     expenseDate?: DateTimeFilter<"Expense"> | Date | string
     recordedById?: StringFilter<"Expense"> | string
@@ -13158,7 +13082,7 @@ export namespace Prisma {
   export type ServiceRecordCreateWithoutCustomerInput = {
     id?: string
     serviceType: string
-    amountPaid: Decimal | DecimalJsLike | number | string
+    amountPaid: number
     paymentMethod: $Enums.PaymentMethod
     barberName: string
     serviceDate?: Date | string
@@ -13171,7 +13095,7 @@ export namespace Prisma {
   export type ServiceRecordUncheckedCreateWithoutCustomerInput = {
     id?: string
     serviceType: string
-    amountPaid: Decimal | DecimalJsLike | number | string
+    amountPaid: number
     paymentMethod: $Enums.PaymentMethod
     barberName: string
     serviceDate?: Date | string
@@ -13554,7 +13478,7 @@ export namespace Prisma {
   export type ServiceRecordCreateManyRecordedByInput = {
     id?: string
     serviceType: string
-    amountPaid: Decimal | DecimalJsLike | number | string
+    amountPaid: number
     paymentMethod: $Enums.PaymentMethod
     barberName: string
     serviceDate?: Date | string
@@ -13567,7 +13491,7 @@ export namespace Prisma {
   export type ExpenseCreateManyRecordedByInput = {
     id?: string
     category: string
-    amount: Decimal | DecimalJsLike | number | string
+    amount: number
     description?: string | null
     expenseDate?: Date | string
     isSynced?: boolean
@@ -13638,7 +13562,7 @@ export namespace Prisma {
   export type ServiceRecordUpdateWithoutRecordedByInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceType?: StringFieldUpdateOperationsInput | string
-    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntFieldUpdateOperationsInput | number
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     barberName?: StringFieldUpdateOperationsInput | string
     serviceDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13651,7 +13575,7 @@ export namespace Prisma {
   export type ServiceRecordUncheckedUpdateWithoutRecordedByInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceType?: StringFieldUpdateOperationsInput | string
-    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntFieldUpdateOperationsInput | number
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     barberName?: StringFieldUpdateOperationsInput | string
     serviceDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13664,7 +13588,7 @@ export namespace Prisma {
   export type ServiceRecordUncheckedUpdateManyWithoutRecordedByInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceType?: StringFieldUpdateOperationsInput | string
-    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntFieldUpdateOperationsInput | number
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     barberName?: StringFieldUpdateOperationsInput | string
     serviceDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13677,7 +13601,7 @@ export namespace Prisma {
   export type ExpenseUpdateWithoutRecordedByInput = {
     id?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amount?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expenseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isSynced?: BoolFieldUpdateOperationsInput | boolean
@@ -13688,7 +13612,7 @@ export namespace Prisma {
   export type ExpenseUncheckedUpdateWithoutRecordedByInput = {
     id?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amount?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expenseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isSynced?: BoolFieldUpdateOperationsInput | boolean
@@ -13699,7 +13623,7 @@ export namespace Prisma {
   export type ExpenseUncheckedUpdateManyWithoutRecordedByInput = {
     id?: StringFieldUpdateOperationsInput | string
     category?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amount?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     expenseDate?: DateTimeFieldUpdateOperationsInput | Date | string
     isSynced?: BoolFieldUpdateOperationsInput | boolean
@@ -13710,7 +13634,7 @@ export namespace Prisma {
   export type ServiceRecordCreateManyCustomerInput = {
     id?: string
     serviceType: string
-    amountPaid: Decimal | DecimalJsLike | number | string
+    amountPaid: number
     paymentMethod: $Enums.PaymentMethod
     barberName: string
     serviceDate?: Date | string
@@ -13723,7 +13647,7 @@ export namespace Prisma {
   export type ServiceRecordUpdateWithoutCustomerInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceType?: StringFieldUpdateOperationsInput | string
-    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntFieldUpdateOperationsInput | number
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     barberName?: StringFieldUpdateOperationsInput | string
     serviceDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13736,7 +13660,7 @@ export namespace Prisma {
   export type ServiceRecordUncheckedUpdateWithoutCustomerInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceType?: StringFieldUpdateOperationsInput | string
-    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntFieldUpdateOperationsInput | number
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     barberName?: StringFieldUpdateOperationsInput | string
     serviceDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13749,7 +13673,7 @@ export namespace Prisma {
   export type ServiceRecordUncheckedUpdateManyWithoutCustomerInput = {
     id?: StringFieldUpdateOperationsInput | string
     serviceType?: StringFieldUpdateOperationsInput | string
-    amountPaid?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    amountPaid?: IntFieldUpdateOperationsInput | number
     paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
     barberName?: StringFieldUpdateOperationsInput | string
     serviceDate?: DateTimeFieldUpdateOperationsInput | Date | string
