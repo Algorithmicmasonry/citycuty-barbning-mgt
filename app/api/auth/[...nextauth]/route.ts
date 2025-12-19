@@ -1,14 +1,13 @@
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+// Remove PrismaAdapter import
 import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
 
 export const runtime = "nodejs";
 
-// Export authOptions so getServerSession() can use it
 export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  // Remove the adapter line completely
   session: {
     strategy: "jwt",
   },
@@ -35,17 +34,15 @@ export const authOptions: AuthOptions = {
 
         if (!isValid) return null;
 
-        // Return user object including role
         return {
           id: user.id,
           email: user.email,
-          role: user.role, // "ADMIN" | "SALES_REP"
+          role: user.role,
         };
       },
     }),
   ],
   callbacks: {
-    // Persist custom fields in the JWT
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
@@ -53,7 +50,6 @@ export const authOptions: AuthOptions = {
       }
       return token;
     },
-    // Include custom fields in the session object
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
@@ -67,6 +63,5 @@ export const authOptions: AuthOptions = {
   },
 };
 
-// Export the NextAuth handler for GET/POST requests
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
