@@ -187,7 +187,7 @@ export function ServiceRecordDialog({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="CASH">Cash</SelectItem>
-                <SelectItem value="CARD">Card</SelectItem>
+                <SelectItem value="POS">Card</SelectItem>
                 <SelectItem value="TRANSFER">Mobile Transfer</SelectItem>
               </SelectContent>
             </Select>

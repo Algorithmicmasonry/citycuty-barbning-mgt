@@ -85,6 +85,7 @@ export function ExpenseRecordDialog({
                 <SelectItem value="supplies">Supplies</SelectItem>
                 <SelectItem value="utilities">Utilities</SelectItem>
                 <SelectItem value="maintenance">Maintenance</SelectItem>
+                <SelectItem value="commission">Comission</SelectItem>
                 <SelectItem value="fuel">Fuel</SelectItem>
                 <SelectItem value="electricity">Electricity</SelectItem>
                 <SelectItem value="other">Other</SelectItem>
@@ -112,7 +113,7 @@ export function ExpenseRecordDialog({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
-              className="bg-secondary min-h-[100px]"
+              className="bg-secondary min-h-25"
             />
           </div>
           <div className="flex gap-3 pt-4">

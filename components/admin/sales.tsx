@@ -201,7 +201,7 @@ export function SalesHistory({ sales }: Props) {
                       <Scissors className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                      <p className="font-medium text-foreground">{sale.service}</p>
+                      <p className="font-medium text-foreground capitalize">{sale.service}</p>
                       <p className="text-sm text-muted-foreground">
                         {sale.customer} • Barber: {sale.barber}
                       </p>
