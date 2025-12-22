@@ -2,6 +2,8 @@ import { CustomerRecords } from "@/components/admin";
 import prisma from "@/lib/prisma";
 import { format } from "date-fns";
 
+export const dynamic = "force-dynamic";
+
 async function getCustomersData() {
   const customers = await prisma.customer.findMany({
     include: {

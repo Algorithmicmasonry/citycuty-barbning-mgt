@@ -2,6 +2,9 @@
 import { DetailedReports } from "@/components/admin"
 import  prisma  from "@/lib/prisma"
 
+export const dynamic = "force-dynamic";
+
+
 async function getReportsData() {
   // Fetch ALL services and expenses - let the client filter
   const [allServices, allExpenses, totalCustomers] = await Promise.all([

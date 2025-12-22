@@ -3,6 +3,9 @@ import { SalesHistory } from "@/components/admin";
 import prisma from "@/lib/prisma";
 import { format } from "date-fns";
 
+export const dynamic = "force-dynamic";
+
+
 async function getSalesData() {
   const services = await prisma.serviceRecord.findMany({
     include: {

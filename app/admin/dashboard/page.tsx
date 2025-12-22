@@ -9,6 +9,9 @@ import {
   eachDayOfInterval,
 } from "date-fns";
 
+
+export const dynamic = "force-dynamic";
+
 async function getDashboardData() {
   const now = new Date();
   const startOfCurrentMonth = startOfMonth(now);

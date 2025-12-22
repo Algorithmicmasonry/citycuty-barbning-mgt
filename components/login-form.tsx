@@ -37,29 +37,22 @@ export function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!role) {
+      toast.error("Please select a role");
+      return;
+    }
+
     setLoading(true);
 
-    if (!role) return;
-
-    // Attempt login via NextAuth credentials
-    const result = await signIn("credentials", {
-      redirect: false, // we handle redirect manually
+    await signIn("credentials", {
       email,
       password,
+      callbackUrl: role === "admin" ? "/admin" : "/sales",
     });
 
-    setLoading(false);
-
-    if (result?.ok) {
-      // Redirect based on role after successful login
-      if (role === "sales") {
-        router.push("/sales");
-      } else if (role === "admin") {
-        router.push("/admin");
-      }
-    } else {
-      toast.error("Invalid email or password");
-    }
+    // no router.push
+    // no success toast here (page will redirect)
   };
 
   return (

@@ -3,6 +3,9 @@ import { ExpensesHistory } from "@/components/admin";
 import prisma from "@/lib/prisma";
 import { format } from "date-fns";
 
+export const dynamic = "force-dynamic";
+
+
 async function getExpensesData() {
   const expenses = await prisma.expense.findMany({
     include: {
